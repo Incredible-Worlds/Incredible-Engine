@@ -5,13 +5,6 @@
 #include <SDL.h>
 #include <SDL_mixer.h>
 
-#ifndef _WIN32
-#include <Windows.h>
-#else
-#include <conio.h>
-#endif // !
-
-
 namespace IncredibleEngine {
 
 	class CreateWindow {

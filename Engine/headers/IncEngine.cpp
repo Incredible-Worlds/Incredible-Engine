@@ -28,4 +28,3 @@ int IncredibleEngine::IE_CheckError(CreateWindow CurretnWindow) {
 
     return 0;
 }
-
