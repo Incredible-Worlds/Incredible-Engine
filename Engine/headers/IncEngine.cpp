@@ -44,7 +44,8 @@ SDL_Renderer* IncredibleEngine::BaseFoo::CreateWin::GetRender() {
 IncredibleEngine::BaseFoo::CreateTexture::CreateTexture()
 {
     texture = NULL;
-    rect.x = 0; rect.y = 0;
+    rect.x = 50; rect.y = 70;
+    rect.w = 50; rect.h = 50;
 }
 
 IncredibleEngine::BaseFoo::CreateTexture::~CreateTexture()
@@ -98,3 +99,4 @@ IncredibleEngine::BaseFoo::CreateButton::~CreateButton()
     delete(x);
     delete(y);
 }
+

@@ -31,7 +31,7 @@ namespace IncredibleEngine {
 			CreateTexture();
 			~CreateTexture();
 			int SetTexture(std::string locality, CreateWin& CurrentWindow);
-			SDL_Texture* GetTexture();
+			virtual SDL_Texture* GetTexture();
 			SDL_Rect* GetRect();
 
 		protected:
@@ -52,5 +52,7 @@ namespace IncredibleEngine {
 	
 	namespace AdditionalFoo {
 		int IE_CheckError(BaseFoo::CreateWin& CurrectWindow);
+
+		int IE_DrowTextures();
 	}
 }
