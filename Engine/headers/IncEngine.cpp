@@ -78,14 +78,6 @@ SDL_Rect* IncredibleEngine::BaseFoo::CreateTexture::GetRect()
     return &rect;
 }
 
-int IncredibleEngine::AdditionalFoo::IE_CheckError(BaseFoo::CreateWin& CurretnWindow) {
-    if (CurretnWindow.GetWindow() == NULL) {
-        return -1;
-    }
-
-    return 0;
-}
-
 IncredibleEngine::BaseFoo::CreateButton::CreateButton()
 {
     x = new int;
@@ -99,4 +91,24 @@ IncredibleEngine::BaseFoo::CreateButton::~CreateButton()
     delete(x);
     delete(y);
 }
+
+
+int IncredibleEngine::AdditionalFoo::IE_CheckError(BaseFoo::CreateWin& CurrentWindow) {
+    if (CurrentWindow.GetWindow() == NULL) {
+        return -1;
+    }
+
+    return 0;
+}
+
+int IncredibleEngine::AdditionalFoo::IE_DrawTextures(BaseFoo::CreateWin& CurrentWindow, BaseFoo::CreateTexture* texturearr)
+{
+    for (int i = 0; i < 1; i++) {
+        SDL_RenderCopy(CurrentWindow.GetRender(), texturearr[i].GetTexture(), NULL, texturearr[i].GetRect());
+        SDL_RenderPresent(CurrentWindow.GetRender());
+        SDL_RenderClear(CurrentWindow.GetRender());
+    }
+    return 0;
+}
+
 

@@ -51,8 +51,8 @@ namespace IncredibleEngine {
 	}
 	
 	namespace AdditionalFoo {
-		int IE_CheckError(BaseFoo::CreateWin& CurrectWindow);
+		int IE_CheckError(BaseFoo::CreateWin& CurrentWindow);
 
-		int IE_DrowTextures();
+		int IE_DrawTextures(BaseFoo::CreateWin& CurrentWindow, BaseFoo::CreateTexture* texturearr);
 	}
 }
