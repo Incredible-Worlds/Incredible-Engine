@@ -9,13 +9,23 @@
 #include <vector>
 #include <Windows.h>
 
-namespace IncredibleEngine {
+enum TextureType {
+	IE_BACKGROUND,
+	IE_GUI,
+	IE_NPC
+};
 
-	enum TextureType {
-		IE_BACKGROUND,
-		IE_GUI,
-		IE_NPC
+namespace TextureDocker {
+	class IE_Textures {
+	public:
+
+	private:
+		std::string textureName;
+		SDL_Texture* dockerTexture;
 	};
+}
+
+namespace IncredibleEngine {
 
 	namespace BaseFoo {
 		class CreateWin {
@@ -37,10 +47,10 @@ namespace IncredibleEngine {
 		};
 
 
-		class CreateTexture {
+		class CreateObject {
 		public:
-			CreateTexture();
-			~CreateTexture();
+			CreateObject();
+			~CreateObject();
 			int SetTexture(std::string locality, CreateWin& CurrentWindow);
 			virtual SDL_Texture* GetTexture();
 			SDL_Rect* GetRect();
@@ -53,17 +63,18 @@ namespace IncredibleEngine {
 		private:
 		};
 
-		class Button : public CreateTexture {
+		class Button : public CreateObject {
 		public:
 			Button();
 			Button(int posx, int posy);
+			Button(int posx, int posy, std::string locality, CreateWin& CurrentWndow);
 			~Button();
 		private:
 			short int x;
 			short int y;
 		};
 
-		class Player : public CreateTexture {
+		class Player : public CreateObject {
 		public:
 			Player();
 		private:
@@ -73,7 +84,7 @@ namespace IncredibleEngine {
 			int absolutePosY;
 		};
 
-		class Enemy : public CreateTexture {
+		class Enemy : public CreateObject {
 		public:
 
 		private:
@@ -92,9 +103,9 @@ namespace IncredibleEngine {
 
 		// Draw all game textures
 		// Return -1 if any texture was not loaded
-		int IE_DrawTextures(BaseFoo::CreateWin& CurrentWindow, ie::BaseFoo::CreateTexture** texturearr);
+		int IE_DrawTextures(BaseFoo::CreateWin& CurrentWindow, ie::BaseFoo::CreateObject** texturearr);
 
 		// Processing all types of interacting with the game window
-		int IE_WinInteract(BaseFoo::CreateWin& CurrentWindow, ie::BaseFoo::CreateTexture** texturearr);
+		int IE_WinInteract(BaseFoo::CreateWin& CurrentWindow, ie::BaseFoo::CreateObject** texturearr);
 	}
 }

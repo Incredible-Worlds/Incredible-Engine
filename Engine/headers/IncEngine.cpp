@@ -1,7 +1,7 @@
 #include "IncEngine.hpp"
 
 IncredibleEngine::BaseFoo::CreateWin::CreateWin() {
-    //ShowWindow(GetConsoleWindow(), SW_HIDE);
+    ShowWindow(GetConsoleWindow(), SW_HIDE);
     SDL_Init(SDL_INIT_EVERYTHING || SDL_INIT_AUDIO);
 
     window = SDL_CreateWindow("Window",
@@ -72,7 +72,7 @@ SDL_Event* IncredibleEngine::BaseFoo::CreateWin::GetEvent()
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-IncredibleEngine::BaseFoo::CreateTexture::CreateTexture()
+IncredibleEngine::BaseFoo::CreateObject::CreateObject()
 {
     texture = NULL;
     rect.x = 50; rect.y = 70;
@@ -81,14 +81,14 @@ IncredibleEngine::BaseFoo::CreateTexture::CreateTexture()
     type = IE_BACKGROUND;
 }
 
-IncredibleEngine::BaseFoo::CreateTexture::~CreateTexture()
+IncredibleEngine::BaseFoo::CreateObject::~CreateObject()
 {
     std::cout << "Destructing texture" << std::endl;
 
     SDL_DestroyTexture(texture);
 }
 
-int IncredibleEngine::BaseFoo::CreateTexture::SetTexture(std::string locality, CreateWin& CurrentWindow)
+int IncredibleEngine::BaseFoo::CreateObject::SetTexture(std::string locality, CreateWin& CurrentWindow)
 {
     SDL_Surface* temptexture = SDL_LoadBMP(locality.c_str());
     texture = SDL_CreateTextureFromSurface(CurrentWindow.GetRender(), temptexture);
@@ -101,17 +101,17 @@ int IncredibleEngine::BaseFoo::CreateTexture::SetTexture(std::string locality, C
     return 0;
 }
 
-SDL_Texture* IncredibleEngine::BaseFoo::CreateTexture::GetTexture()
+SDL_Texture* IncredibleEngine::BaseFoo::CreateObject::GetTexture()
 {
     return texture;
 }
 
-SDL_Rect* IncredibleEngine::BaseFoo::CreateTexture::GetRect()
+SDL_Rect* IncredibleEngine::BaseFoo::CreateObject::GetRect()
 {
     return &rect;
 }
 
-int IncredibleEngine::BaseFoo::CreateTexture::GetType()
+int IncredibleEngine::BaseFoo::CreateObject::GetType()
 {
     return type;
 }
@@ -125,6 +125,13 @@ IncredibleEngine::BaseFoo::Button::Button()
 IncredibleEngine::BaseFoo::Button::Button(int posx, int posy) {
     rect.x = x = posx;
     rect.y = y = posy;
+}
+
+IncredibleEngine::BaseFoo::Button::Button(int posx, int posy, std::string locality, CreateWin& CurrentWindow) {
+    rect.x = x = posx;
+    rect.y = y = posy;
+
+    SetTexture(locality, CurrentWindow);
 }
 
 IncredibleEngine::BaseFoo::Button::~Button() {
@@ -144,7 +151,7 @@ int IncredibleEngine::AdditionalFoo::IE_CheckError(BaseFoo::CreateWin& CurrentWi
     return 0;
 }
 
-int IncredibleEngine::AdditionalFoo::IE_DrawTextures(BaseFoo::CreateWin& CurrentWindow, ie::BaseFoo::CreateTexture** texturearr) {
+int IncredibleEngine::AdditionalFoo::IE_DrawTextures(BaseFoo::CreateWin& CurrentWindow, ie::BaseFoo::CreateObject** texturearr) {
     SDL_RenderClear(CurrentWindow.GetRender());
 
     for (int i = 0; i < 4; i++) {
@@ -155,7 +162,7 @@ int IncredibleEngine::AdditionalFoo::IE_DrawTextures(BaseFoo::CreateWin& Current
     return 0;
 }
 
-int IncredibleEngine::AdditionalFoo::IE_WinInteract(BaseFoo::CreateWin& CurrentWindow, ie::BaseFoo::CreateTexture** texturearr) {
+int IncredibleEngine::AdditionalFoo::IE_WinInteract(BaseFoo::CreateWin& CurrentWindow, ie::BaseFoo::CreateObject** texturearr) {
     if (SDL_PollEvent(CurrentWindow.GetEvent())) {
         if (CurrentWindow.GetEvent()->type == SDL_QUIT) {
             return 1;
@@ -174,5 +181,3 @@ int IncredibleEngine::AdditionalFoo::IE_WinInteract(BaseFoo::CreateWin& CurrentW
 
     return 0;
 }
-
-
