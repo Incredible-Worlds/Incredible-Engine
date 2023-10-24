@@ -15,16 +15,6 @@ enum TextureType {
 	IE_NPC
 };
 
-namespace TextureDocker {
-	class IE_Textures {
-	public:
-
-	private:
-		std::string textureName;
-		SDL_Texture* dockerTexture;
-	};
-}
-
 namespace IncredibleEngine {
 
 	namespace BaseFoo {
@@ -52,6 +42,7 @@ namespace IncredibleEngine {
 			CreateObject();
 			~CreateObject();
 			int SetTexture(std::string locality, CreateWin& CurrentWindow);
+			int SetTexture(SDL_Texture& temptexture, CreateWin& CurrentWindow);
 			virtual SDL_Texture* GetTexture();
 			SDL_Rect* GetRect();
 			int GetType();
@@ -108,4 +99,18 @@ namespace IncredibleEngine {
 		// Processing all types of interacting with the game window
 		int IE_WinInteract(BaseFoo::CreateWin& CurrentWindow, ie::BaseFoo::CreateObject** texturearr);
 	}
+
+	namespace TextureDocker {
+		class IE_Textures {
+		public:
+			IE_Textures(std::string locality, std::string inputName, TextureType inputType, ie::BaseFoo::CreateWin& CurrentWindow);
+			SDL_Texture& GetTexture();
+		private:
+			std::string textureName;
+			TextureType type;
+			SDL_Texture* dockerTexture;
+		};
+	}
 }
+
+

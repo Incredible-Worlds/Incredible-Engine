@@ -1,7 +1,6 @@
 #include "IncEngine.hpp"
 
 IncredibleEngine::BaseFoo::CreateWin::CreateWin() {
-    ShowWindow(GetConsoleWindow(), SW_HIDE);
     SDL_Init(SDL_INIT_EVERYTHING || SDL_INIT_AUDIO);
 
     window = SDL_CreateWindow("Window",
@@ -21,7 +20,6 @@ IncredibleEngine::BaseFoo::CreateWin::CreateWin() {
 }
 
 IncredibleEngine::BaseFoo::CreateWin::CreateWin(int width, int height) {
-    ShowWindow(GetConsoleWindow(), SW_HIDE);
     if (width <= 0 || height <= 0) { width = height = 400; }
 
     SDL_Init(SDL_INIT_EVERYTHING || SDL_INIT_AUDIO);
@@ -49,8 +47,6 @@ IncredibleEngine::BaseFoo::CreateWin::~CreateWin() {
     SDL_DestroyWindow(window);
     render = NULL;
     surface = NULL;
-
-    ShowWindow(GetConsoleWindow(), SW_SHOW);
 }
 
 SDL_Window* IncredibleEngine::BaseFoo::CreateWin::GetWindow() {
@@ -70,7 +66,8 @@ SDL_Event* IncredibleEngine::BaseFoo::CreateWin::GetEvent()
     return& windowEvent;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
+/// Main foo
+///////////////////////////////////////////////////////////////////////////////////
 
 IncredibleEngine::BaseFoo::CreateObject::CreateObject()
 {
@@ -98,6 +95,12 @@ int IncredibleEngine::BaseFoo::CreateObject::SetTexture(std::string locality, Cr
         return -1;
     }
 
+    return 0;
+}
+
+int IncredibleEngine::BaseFoo::CreateObject::SetTexture(SDL_Texture& temptexture, CreateWin& CurrentWindow)
+{
+    texture = &temptexture;
     return 0;
 }
 
@@ -144,7 +147,8 @@ IncredibleEngine::BaseFoo::Player::Player() {
     absolutePosY = 0;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
+/// Some additioanl foo
+///////////////////////////////////////////////////////////////////////////////////
 
 int IncredibleEngine::AdditionalFoo::IE_CheckError(BaseFoo::CreateWin& CurrentWindow) {
     if (CurrentWindow.GetWindow() == NULL) return -1;
@@ -154,7 +158,7 @@ int IncredibleEngine::AdditionalFoo::IE_CheckError(BaseFoo::CreateWin& CurrentWi
 int IncredibleEngine::AdditionalFoo::IE_DrawTextures(BaseFoo::CreateWin& CurrentWindow, ie::BaseFoo::CreateObject** texturearr) {
     SDL_RenderClear(CurrentWindow.GetRender());
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 2; i++) {
         if (texturearr[i]->GetTexture() == NULL) return -1;
         SDL_RenderCopy(CurrentWindow.GetRender(), texturearr[i]->GetTexture(), NULL, texturearr[i]->GetRect());
     }
@@ -180,4 +184,21 @@ int IncredibleEngine::AdditionalFoo::IE_WinInteract(BaseFoo::CreateWin& CurrentW
     }
 
     return 0;
+}
+
+/// Docker foo
+
+IncredibleEngine::TextureDocker::IE_Textures::IE_Textures(std::string locality, std::string inputName, TextureType inputType, ie::BaseFoo::CreateWin& CurrentWindow)
+{
+    SDL_Surface* temptexture = SDL_LoadBMP(locality.c_str());
+    dockerTexture = SDL_CreateTextureFromSurface(CurrentWindow.GetRender(), temptexture);
+    SDL_FreeSurface(temptexture);
+
+    textureName = inputName;
+    type = inputType;
+}
+
+SDL_Texture& IncredibleEngine::TextureDocker::IE_Textures::GetTexture()
+{
+    return* dockerTexture;
 }

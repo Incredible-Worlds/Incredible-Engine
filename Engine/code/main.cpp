@@ -3,17 +3,19 @@
 int main(int argc, char** argv) {
 
 	ie::BaseFoo::CreateWin window;
-	ie::BaseFoo::Button button(50, 50, "../Engine/texture.bmp", window);
-	ie::BaseFoo::Button button1(80, 49, "../Engine/texture.bmp", window);
-	ie::BaseFoo::Button button2(0, 13, "../Engine/texture.bmp", window);
-	ie::BaseFoo::Button button3(250, 260, "../Engine/texture.bmp", window);
+
+	ie::TextureDocker::IE_Textures buttonDocker("../Engine/texture.bmp", "button", IE_BACKGROUND, window);
+
+
+	ie::BaseFoo::Button button(50, 50); button.SetTexture(buttonDocker.GetTexture(), window);
+	ie::BaseFoo::Button button1(100, 100); button1.SetTexture(buttonDocker.GetTexture(), window);
+	ie::BaseFoo::Button button2(170, 200); button2.SetTexture(buttonDocker.GetTexture(), window);
 
 	ie::BaseFoo::CreateObject* texturearr[10]{};
 
 	texturearr[0] = &button;
 	texturearr[1] = &button1;
-	texturearr[2] = &button2;
-	texturearr[3] = &button3;
+	texturearr[1] = &button2;
 
 	if (ie::AdditionalFoo::IE_CheckError(window) != 0) return 5;
 
